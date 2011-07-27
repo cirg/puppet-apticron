@@ -1,7 +1,12 @@
 # PUPPET-MANAGED: This file is managed with Puppet. Do not edit locally.
 # apticron.conf
 #
+<% if lsbdistcodename != "lenny" -%>
+# set EMAIL to a space separated list of addresses which will be notified of
+# impending updates
+<% else -%>
 # set EMAIL to a list of addresses which will be notified of impending updates
+<% end -%>
 #
 EMAIL="<%= email %>"
 
@@ -34,8 +39,39 @@ EMAIL="<%= email %>"
 # IPADDRESSNUM="1"
 
 #
+<% if lsbdistcodename != "lenny" -%>
+# Set IPADDRESSES to a whitespace separated list of reachable addresses for
+<% else -%>
 # Set IPADDRESSES to a whitespace seperated list of reachable addresses for
+<% end -%>
 # this system. By default, apticron will try to work these out using the
 # "ip" command
 #
 # IPADDRESSES="192.0.2.1 2001:db8:1:2:3::1"
+<% if lsbdistcodename != "lenny" -%>
+
+#
+# Set NOTIFY_HOLDS="0" if you don't want to be notified about new versions of
+# packages on hold in your system. The default behavior is downloading and
+# listing them as any other package.
+#
+# NOTIFY_HOLDS="0"
+
+#
+# Set NOTIFY_NEW="0" if you don't want to be notified about packages which
+# are not installed in your system. Yes, it's possible! There are some issues
+# related to systems which have mixed stable/unstable sources. In these cases
+# apt-get will consider for example that packages with "Priority:
+# required"/"Essential: yes" in unstable but not in stable should be installed,
+# so they will be listed in dist-upgrade output. Please take a look at
+# http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=531002#44
+#
+# NOTIFY_NEW="0"
+
+
+#
+# Set CUSTOM_SUBJECT if you want to replace the default subject used in
+# the notification e-mails. This may help filtering/sorting client-side e-mail.
+#
+# CUSTOM_SUBJECT=""
+<% end -%>
